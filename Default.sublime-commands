@@ -1,0 +1,3 @@
+[
+    { "caption": "Toggle Uncovered Lines", "command": "show_python_coverage" }
+]

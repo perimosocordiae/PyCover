@@ -1,0 +1,7 @@
+[
+{
+	"id": "py-cover",
+	"caption": "Toggle uncovered lines",
+	"command": "show_python_coverage"
+}
+]

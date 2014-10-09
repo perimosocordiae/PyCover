@@ -1,0 +1,24 @@
+Thanks for installing PyCover!
+Here's what you need to get started:
+
+First, install `coverage`.
+The easiest way to install it is
+
+    pip install coverage
+
+Next, give it a test!
+Make sure you've run your tests with coverage on,
+then press ctrl-alt-shift-c or
+select "Toggle Uncovered Lines" from the Command Palette.
+Run the same command again to hide the gutter marks.
+
+If needed, update PyCover's settings.
+(Preferences > Package Settings > PyCover > "Settings - User")
+
+Available preferences are:
+ 
+ * `python`: path to the Python interpreter the coverage report is read with.
+   (Try using the result of `which python` if you're not sure.)
+
+ * `onload`: whether PyCover should annotate lines when you load a file.
+   (Defaults to false.)
