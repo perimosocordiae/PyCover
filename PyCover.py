@@ -60,7 +60,9 @@ class ShowPythonCoverageCommand(sublime_plugin.TextCommand):
     cov_config = find(fname, '.coveragerc') or ''
 
     # run missing_lines.py with the correct paths
-    python = SETTINGS.get('python', 'python')
+    python = SETTINGS.get('python', '')
+    if not python:
+      python = which('python')
     ml_file = os.path.join(os.path.dirname(__file__), 'scripts',
                            'missing_lines.py')
     p = subprocess.Popen([python, ml_file, cov_file, cov_config, fname],
@@ -111,3 +113,14 @@ def find(base, *rel, **kwargs):
     baseprev, base = base, os.path.dirname(base)
     if not base or base == baseprev:
       return
+
+
+def which(progname):
+  exts = os.environ.get('PATHEXT', '').split(os.pathsep)
+  for path in os.environ['PATH'].split(os.pathsep):
+    for ext in exts:
+      fullpath = os.path.join(path, progname + ext)
+      if os.path.exists(fullpath):
+        return fullpath
+  return None
+

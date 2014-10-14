@@ -18,7 +18,7 @@ If needed, update PyCover's settings.
 Available preferences are:
  
  * `python`: path to the Python interpreter the coverage report is read with.
-   (Try using the result of `which python` if you're not sure.)
+   (If blank, PyCover attempts to find it for you.)
 
  * `onload`: whether PyCover should annotate lines when you load a file.
    (Defaults to false.)
