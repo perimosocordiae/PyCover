@@ -96,10 +96,11 @@ def missing_lines_callback(view, proc, poll_sleep=0.1, poll_timeout=10):
       for line_num in missing_lines]
 
   # update highlighted regions
-  view.erase_regions('PyCover')
+  sublime.set_timeout(lambda: view.erase_regions('PyCover'), 0)
   if outlines:
-    view.add_regions('PyCover', outlines, 'markup.inserted',
-                     'bookmark', sublime.HIDDEN)
+    sublime.set_timeout(
+        lambda: view.add_regions('PyCover', outlines, 'markup.inserted',
+                                 'bookmark', sublime.HIDDEN), 0)
     view.settings().set('showing', True)
 
 
