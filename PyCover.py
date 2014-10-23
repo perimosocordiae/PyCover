@@ -84,24 +84,25 @@ def missing_lines_callback(view, proc, poll_sleep=0.1, poll_timeout=10):
       return
     time.sleep(poll_sleep)
     sublime.set_timeout(progress_status, 0)
-  sublime.set_timeout(
-      lambda: sublime.status_message('Missing lines annotated.'), 0)
 
   # read stdout to parse missing lines
   stdout, _ = proc.communicate()
   missing_lines = map(int, stdout.decode('UTF-8').splitlines())
 
+  # update highlighted regions
+  sublime.set_timeout(lambda: _update_highlighted(view, missing_lines), 0)
+
+
+def _update_highlighted(view, missing_lines):
   outlines = [
       view.full_line(view.text_point(line_num-1, 0))
       for line_num in missing_lines]
-
-  # update highlighted regions
-  sublime.set_timeout(lambda: view.erase_regions('PyCover'), 0)
+  view.erase_regions('PyCover')
   if outlines:
-    sublime.set_timeout(
-        lambda: view.add_regions('PyCover', outlines, 'markup.inserted',
-                                 'bookmark', sublime.HIDDEN), 0)
+    view.add_regions('PyCover', outlines, 'markup.inserted',
+                     'bookmark', sublime.HIDDEN)
     view.settings().set('showing', True)
+  sublime.status_message('Missing lines annotated.')
 
 
 def find(base, *rel, **kwargs):

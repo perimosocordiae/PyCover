@@ -10,7 +10,6 @@ def missing_lines(cov_file, cov_config, fname):
   if FnmatchMatcher(cov.omit).match(fname):
     return
   cov_dir = os.path.dirname(cov_file)
-  os.chdir(cov_dir)
   relpath = os.path.relpath(fname, cov_dir)
   cov.load()
   missing_lines = cov.analysis(relpath)[2]
