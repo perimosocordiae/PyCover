@@ -102,7 +102,9 @@ def _update_highlighted(view, missing_lines):
     view.add_regions('PyCover', outlines, 'markup.inserted',
                      'bookmark', sublime.HIDDEN)
     view.settings().set('showing', True)
-  sublime.status_message('Missing lines annotated.')
+  msg = '%d missing lines annotated.' % len(outlines)
+  print(msg)
+  sublime.status_message(msg)
 
 
 def find(base, *rel, **kwargs):
@@ -125,4 +127,3 @@ def which(progname):
       if os.path.exists(fullpath):
         return fullpath
   return None
-
