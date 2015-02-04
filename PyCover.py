@@ -53,9 +53,7 @@ class ShowPythonCoverageCommand(sublime_plugin.TextCommand):
 
     cov_file = find(fname, '.coverage')
     if not cov_file:
-      sublime.set_timeout(
-          lambda: sublime.status_message('Could not find .coverage file'), 0)
-      print('PyCover: Could not find .coverage file for', fname)
+      status_report('Could not find .coverage file for %s' % fname, wrap=True)
       return
     cov_config = find(fname, '.coveragerc') or ''
 
@@ -78,8 +76,7 @@ def missing_lines_callback(view, proc, poll_sleep=0.1, poll_timeout=10):
   while proc.poll() is None:
     if time.time() - tic > poll_timeout:
       msg = 'missing_lines.py timed out after %f s' % (time.time() - tic)
-      print(msg)
-      sublime.set_timeout(lambda: sublime.status_message(msg), 0)
+      status_report(msg, wrap=True)
       proc.kill()
       return
     time.sleep(poll_sleep)
@@ -102,9 +99,7 @@ def _update_highlighted(view, missing_lines):
     view.add_regions('PyCover', outlines, 'markup.inserted',
                      'bookmark', sublime.HIDDEN)
     view.settings().set('showing', True)
-  msg = '%d missing lines annotated.' % len(outlines)
-  print(msg)
-  sublime.status_message(msg)
+  status_report('%d missing lines annotated.' % len(outlines))
 
 
 def find(base, *rel, **kwargs):
@@ -127,3 +122,11 @@ def which(progname):
       if os.path.exists(fullpath):
         return fullpath
   return None
+
+
+def status_report(message, wrap=False):
+  print('PyCover:', message)
+  if wrap:
+    sublime.set_timeout(lambda: sublime.status_message(message), 0)
+  else:
+    sublime.status_message(message)
