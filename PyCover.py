@@ -64,7 +64,7 @@ class ShowPythonCoverageCommand(sublime_plugin.TextCommand):
     ml_file = os.path.join(sublime.packages_path(), 'PyCover', 'scripts',
                            'missing_lines.py')
     p = subprocess.Popen([python, ml_file, cov_file, cov_config, fname],
-                         stdout=subprocess.PIPE)
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     threading.Thread(target=missing_lines_callback, args=(self.view, p)).start()
 
 
@@ -82,8 +82,12 @@ def missing_lines_callback(view, proc, poll_sleep=0.1, poll_timeout=10):
     time.sleep(poll_sleep)
     sublime.set_timeout(progress_status, 0)
 
+  stdout, stderr = proc.communicate()
+  if proc.returncode != 0:
+    status_report(stderr.decode('UTF-8'), wrap=True)
+    return
+
   # read stdout to parse missing lines
-  stdout, _ = proc.communicate()
   missing_lines = map(int, stdout.decode('UTF-8').splitlines())
 
   # update highlighted regions
