@@ -63,7 +63,7 @@ class ShowPythonCoverageCommand(sublime_plugin.TextCommand):
     python = SETTINGS.get('python', '')
     if not python:
       python = which('python')
-    ml_file = os.path.join(os.path.dirname(__file__), 'scripts',
+    ml_file = os.path.join(sublime.packages_path(), 'PyCover', 'scripts',
                            'missing_lines.py')
     p = subprocess.Popen([python, ml_file, cov_file, cov_config, fname],
                          stdout=subprocess.PIPE)
