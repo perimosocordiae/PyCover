@@ -6,7 +6,6 @@ from coverage import coverage
 def missing_lines(cov_file, cov_config, fname):
   cov = coverage(data_file=cov_file, config_file=cov_config)
   cov.load()
-  cov.start()
   if cov.omit_match and cov.omit_match.match(fname):
     sys.stderr.write('Omitted file.\n')
     sys.exit(1)
