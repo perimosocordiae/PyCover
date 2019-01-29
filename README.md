@@ -7,6 +7,9 @@ based on the output of Ned Batchelder's
 based on the original plugin for ST2,
 [SublimePythonCoverage](https://github.com/davisagli/SublimePythonCoverage).
 
+![Default sublime theme](/demo/default-theme.png?raw=true "Using default sublime theme")
+![Cobalt2 theme](/demo/cobalt2-theme.png?raw=true "Using cobalt2 theme")
+
 ## Installation
 
 Set up
