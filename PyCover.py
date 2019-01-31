@@ -99,9 +99,14 @@ def _update_highlighted(view, missing_lines):
       view.full_line(view.text_point(line_num-1, 0))
       for line_num in missing_lines]
   view.erase_regions('PyCover')
+
+  flags = sublime.HIDDEN
+  if SETTINGS.get('highlight_uncovered_lines', False):
+    flags = sublime.DRAW_NO_OUTLINE
+
   if outlines:
-    view.add_regions('PyCover', outlines, 'markup.inserted',
-                     'Packages/PyCover/themes/default/bar.png', sublime.HIDDEN)
+    view.add_regions('PyCover', outlines, 'invalid',
+                     'Packages/PyCover/themes/default/bar.png', flags)
     view.settings().set('showing', True)
   status_report('%d missing lines annotated.' % len(outlines))
 

@@ -1,4 +1,5 @@
 {
 	"python": "",
-	"onload": false
+	"onload": false,
+	"highlight_uncovered_lines": false
 }
